@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -60,22 +61,62 @@ class ProductController extends AbstractController
      
    }
 
-
 /**
 *@Route("/list", name="listProduct")
 */
-public function listProduct()
+public function listProduct(ProductRepository $productRepository)
 {
-
- return $this->render('product/listProduct.html.twig', [ 
-
     
+    $products=$productRepository->findAll();
+    // dd($products);
+
+
+    return $this->render('product/listProduct.html.twig', [ 
+        'products'=>$products
+
+
  ]);
 
+}
+
+/**
+*@Route("/edit/{id}", name="editProduct")
+*/
+public function editProduct ()
+{
+
+ return $this->render('product/editProduct.html.twig', [ 
 
 
+ ]);
 
 }
+
+/**
+*@Route("/delete/{id}", name="deleteProduct")
+*/
+public function deleteProduct ()
+{
+
+ return $this->redirectToRoute('listProduct');
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
